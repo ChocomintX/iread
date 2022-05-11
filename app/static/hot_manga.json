@@ -1,0 +1,154 @@
+{
+    "code": 0,
+    "title": "热门漫画",
+    "msg": "获取成功",
+    "data": [
+        {
+            "id": 5,
+            "author": {
+                "id": 9,
+                "name": "村田雄介 ONE",
+                "url": "http://www.ykmh.com/author/cuntianxiongjieONE/"
+            },
+            "category": {
+                "id": 7,
+                "name": "少年漫画",
+                "url": "http://www.ykmh.com/list/shaonian/"
+            },
+            "tags": [],
+            "title": "一拳超人",
+            "image_url": "http://js.tingliu.cc/images/cover/201707/1501513547pEzxhp6zSiNpqQMs.jpg",
+            "manga_url": "http://www.ykmh.com/manhua/yiquanchaoren/",
+            "status": "已完结",
+            "detail": "一拳超人漫画 ，主人公埼玉原本是一名整日奔波于求职的普通人。3年前的一天偶然遇到了要对淘气少年下杀手的异变螃蟹人后，回忆起年少年时“想要成为英雄”的梦想，最终拼尽全力救下了淘气少年。之后通过拼命锻炼，埼玉终于脱胎换骨获得了最强的力量，但同时失去了头发成了光头。在独自做了一段时间英雄后，正式加入英雄协会，与众多英雄一起开始了对抗各种怪人以及恶势力的生活……动画官网地址：http://onepunchman-anime. \n>>展开"
+        },
+        {
+            "id": 6,
+            "author": {
+                "id": 10,
+                "name": "尾田荣一郎",
+                "url": "http://www.ykmh.com/author/weitianrongyilang/"
+            },
+            "category": {
+                "id": 7,
+                "name": "少年漫画",
+                "url": "http://www.ykmh.com/list/shaonian/"
+            },
+            "tags": [],
+            "title": "海贼王",
+            "image_url": "http://js.tingliu.cc/images/cover/201807/15313921858fNDMzolygGSstpT.jpg",
+            "manga_url": "http://www.ykmh.com/manhua/haizeiwang/",
+            "status": "已完结",
+            "detail": "财富，权力，曾经拥有一切的海贼王戈尔多·罗杰，在临死前畱下暸一句话：“想要我的财富吗？那就去找吧，我的一切都在那裏，在那伟大的航道！”于是越来越多的人奔嚮大海，驶入伟大的航道，世界迎来暸大海贼时代！很多年后，一个小孩对这一个断暸手臂的海贼髮誓：“我一定要成为海贼王！”于是10年后，一个伟大的传说开始暸。这是个关于一群爱做梦孩子的故事，他们拥有热情，他们拥有毅力，他们拥有伙伴……"
+        },
+        {
+            "id": 39,
+            "author": {
+                "id": 11,
+                "name": "吾峠呼世晴",
+                "url": "http://www.ykmh.com/author/wuguhushiqing/"
+            },
+            "category": {
+                "id": 7,
+                "name": "少年漫画",
+                "url": "http://www.ykmh.com/list/shaonian/"
+            },
+            "tags": [
+                {
+                    "id": 4,
+                    "name": "冒险",
+                    "url": "http://www.ykmh.com/list/maoxian/"
+                },
+                {
+                    "id": 5,
+                    "name": "热血",
+                    "url": "http://www.ykmh.com/list/rexue/"
+                }
+            ],
+            "title": "鬼灭之刃",
+            "image_url": "http://js.tingliu.cc/images/cover/201907/15631837720JpozhcjxMW8XBJO.jpg",
+            "manga_url": "http://www.ykmh.com/manhua/guimiezhiren/",
+            "status": "已完结",
+            "detail": "时值日本大正时期。 传说太阳下山后，恶鬼出没吃人。亦有猎鬼人斩杀恶鬼、保护人们。 卖炭少年·炭治郎，他那平凡而幸福的日常生活，在家人遭到恶鬼袭击的那一天发生剧变。母亲与四个弟妹惨遭杀害，而与他一起生还的妹妹：祢豆子亦异变成凶暴的鬼。 在猎鬼人的指引下，立志成为猎鬼人的炭治郎与变成鬼却尚存理智的的祢豆子二人踏上了旅程。通过艰苦的剑术修行与赌命试炼，炭治郎成为了鬼猎人组织“鬼杀队”的一员。 为了让妹妹祢豆子变回人类，为了讨伐杀害家人的恶鬼，为了斩断悲伤的连锁，少年与鬼的战斗不曾停歇"
+        },
+        {
+            "id": 40,
+            "author": {
+                "id": 12,
+                "name": "绿川幸",
+                "url": "http://www.ykmh.com/author/lvchuanxing/"
+            },
+            "category": {
+                "id": 16,
+                "name": "少女漫画",
+                "url": "http://www.ykmh.com/list/shaonv/"
+            },
+            "tags": [
+                {
+                    "id": 6,
+                    "name": "治愈",
+                    "url": "http://www.ykmh.com/list/zhiyu/"
+                },
+                {
+                    "id": 7,
+                    "name": "神鬼",
+                    "url": "http://www.ykmh.com/list/shengui/"
+                }
+            ],
+            "title": "夏目友人帐",
+            "image_url": "http://js.tingliu.cc/images/cover/201808/15345794256IYrUWKroM7rKwjF.jpg",
+            "manga_url": "http://www.ykmh.com/manhua/xiamuyourenzhang/",
+            "status": "已完结",
+            "detail": "夏目友人帐 详细介绍 夏目友人帐漫画 ，少年-夏目拥有看的见妖怪的这项秘密。他得到了外婆-铃子留下和妖怪们之间的契约书[联络簿]。从此以后,就陷入被妖怪们追赶的窘境。开始和保镖-猫咪老师一同将名字还给妖怪们的夏目会——？"
+        },
+        {
+            "id": 42,
+            "author": {
+                "id": 14,
+                "name": "芥见下々",
+                "url": "http://www.ykmh.com/author/jiejianxia/"
+            },
+            "category": {
+                "id": 17,
+                "name": "儿童漫画",
+                "url": "http://www.ykmh.com/list/ertong/"
+            },
+            "tags": [
+                {
+                    "id": 11,
+                    "name": "#奇幻",
+                    "url": "http://www.ykmh.com/list/qihuan2/"
+                },
+                {
+                    "id": 12,
+                    "name": "#冒险",
+                    "url": "http://www.ykmh.com/list/maoxian2/"
+                }
+            ],
+            "title": "咒术回戦",
+            "image_url": "http://js.tingliu.cc/images/cover/202112/1639969714mYmvhKkIQ8q7L3m6.jpg",
+            "manga_url": "http://www.ykmh.com/manhua/zhoushuhuizhan2/",
+            "status": "连载中",
+            "detail": "漫画《咒术回战》是由新锐漫画家芥见下下所作的少年漫画作品，讲述的是拥有超人般身体能力的男子高中生虎杖悠仁的黑暗幻想故事。因为某种理由，想要每天17点之前回家的虎杖悠仁来到了不强制出席的灵异现象研究会，享受着悠闲的活动。这样的某一天，来学校寻找被封印的诅咒之物的青年伏黒恵出现在了虎杖的面前……"
+        },
+        {
+            "id": 43,
+            "author": {
+                "id": 15,
+                "name": "茂村モト 深山铃",
+                "url": "http://www.ykmh.com/author/maocunshenshanling/"
+            },
+            "category": {
+                "id": 7,
+                "name": "少年漫画",
+                "url": "http://www.ykmh.com/list/shaonian/"
+            },
+            "tags": [],
+            "title": "被勇者队伍开除的驭兽使、邂逅了最强种的猫耳少女",
+            "image_url": "http://js.tingliu.cc/images/cover/202204/16497252490EK-fx8JnLHdF2hO.jpg",
+            "manga_url": "http://www.ykmh.com/manhua/beiyongzheduiwukaichudeyushoushixiehoulezuiqiangzhongdemaoershaonv/",
+            "status": "连载中",
+            "detail": "邂逅了最强种的猫耳少女漫画 ，被开除的驯兽师，邂逅了猫耳萌妹"
+        }
+    ]
+}
