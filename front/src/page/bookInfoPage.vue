@@ -173,7 +173,13 @@ export default {
           title: "提示",
           message: "上次看到" + this.bookHistory.last_read_chapter + ",是否继续阅读？"
         }).then(() => {
-
+          const list=JSON.parse(JSON.stringify(this.bookChapterList))
+          for (let i = 0; i < list.length; i++) {
+            if (list[i].url === this.bookHistory.last_read_url) {
+              this.openChapter(i)
+              break
+            }
+          }
         }).catch(() => {
           // on cancel
         });
@@ -211,7 +217,7 @@ export default {
       return this.bookHistory.collect === 0 ? "加入书架" : "移出书架"
     }
   },
-  created() {
+  mounted() {
     this.init()
   },
   activated() {

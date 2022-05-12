@@ -20,50 +20,53 @@ from app.views import userApi, mangaApi, bookApi
 from app.utils import bookSpider
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('index/', userApi.test),
-    path('chapter/', userService.testchapter),
+    path('api/', include([
+        path('admin/', admin.site.urls),
+        path('index/', userApi.test),
 
-    # 用户接口
-    path('user/', include([
-        path('login/', userApi.login),
-        path('register/', userApi.register),
-        path('update/', userApi.update),
-        path('bindPhone/', userApi.bind_phone),
-        path('bindEmail/', userApi.bind_email),
-        path('changePassword/', userApi.change_password),
-    ])),
+        # 用户接口
+        path('user/', include([
+            path('login/', userApi.login),
+            path('register/', userApi.register),
+            path('active/', userApi.active),
+            path('update/', userApi.update),
+            path('bindPhone/', userApi.bind_phone),
+            path('bindEmail/', userApi.bind_email),
+            path('changePassword/', userApi.change_password),
+        ])),
 
-    # 漫画操作接口
-    path('manga/', include([
-        path('getHotManga/', mangaApi.get_hot_manga),
-        path('getHomeManga/', mangaApi.get_home_manga),
-        path('getMangaInfo/', mangaApi.get_manga_info),
-        path('getMangaChapterList/', mangaApi.get_manga_chapter_list),
-        path('getMangaChapterImages/', mangaApi.get_manga_chapter_images),
-        path('getLastReadChapter/', mangaApi.get_last_read_chapter),
-        path('getMangaHistory/', mangaApi.get_manga_history),
-        path('getMangaCollections/', mangaApi.get_manga_collections),
-        path('getMangaSearch/', mangaApi.get_manga_search),
-        path('addMangaHistory/', mangaApi.add_manga_history),
-        path('setMangaCollect/', mangaApi.set_manga_collect),
-        path('deleteMangaHistory/', mangaApi.delete_manga_history),
-        path('deleteMangaCollections/', mangaApi.delete_manga_collections)
+        # 漫画操作接口
+        path('manga/', include([
+            path('getHotManga/', mangaApi.get_hot_manga),
+            path('getHomeManga/', mangaApi.get_home_manga),
+            path('getMangaInfo/', mangaApi.get_manga_info),
+            path('getMangaChapterList/', mangaApi.get_manga_chapter_list),
+            path('getMangaChapterImages/', mangaApi.get_manga_chapter_images),
+            path('getLastReadChapter/', mangaApi.get_last_read_chapter),
+            path('getMangaHistory/', mangaApi.get_manga_history),
+            path('getMangaCollections/', mangaApi.get_manga_collections),
+            path('getMangaSearch/', mangaApi.get_manga_search),
+            path('addMangaHistory/', mangaApi.add_manga_history),
+            path('setMangaCollect/', mangaApi.set_manga_collect),
+            path('deleteMangaHistory/', mangaApi.delete_manga_history),
+            path('deleteMangaCollections/', mangaApi.delete_manga_collections)
 
-    ])),
+        ])),
 
-    # 小说操作接口
-    path('book/', include([
-        path('getHomeBook/', bookApi.get_home_book),
-        path('getBookInfo/', bookApi.get_book_info),
-        path('getBookChapter/', bookApi.get_book_chapter),
-        path('getLastReadChapter/', bookApi.get_last_read_chapter),
-        path('getChapterContent/', bookApi.get_chapter_content),
-        path('getBookCollections/', bookApi.get_book_collections),
-        path('getBookHistory/', bookApi.get_book_history),
-        path('setBookCollect/', bookApi.set_book_collect),
-        path('addBookHistory/', bookApi.add_book_history),
-        path('deleteBookCollections/', bookApi.delete_book_collections),
-        path('deleteBookHistory/', bookApi.delete_book_history),
+        # 小说操作接口
+        path('book/', include([
+            path('getHomeBook/', bookApi.get_home_book),
+            path('getBookInfo/', bookApi.get_book_info),
+            path('getBookChapter/', bookApi.get_book_chapter),
+            path('getLastReadChapter/', bookApi.get_last_read_chapter),
+            path('getChapterContent/', bookApi.get_chapter_content),
+            path('getBookCollections/', bookApi.get_book_collections),
+            path('getBookSearch/', bookApi.get_book_search),
+            path('getBookHistory/', bookApi.get_book_history),
+            path('setBookCollect/', bookApi.set_book_collect),
+            path('addBookHistory/', bookApi.add_book_history),
+            path('deleteBookCollections/', bookApi.delete_book_collections),
+            path('deleteBookHistory/', bookApi.delete_book_history),
+        ]))
     ]))
 ]

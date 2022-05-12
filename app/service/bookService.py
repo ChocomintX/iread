@@ -1,3 +1,5 @@
+from threading import Timer
+
 from django.db import transaction
 import app.utils.bookSpider as bookspider
 from app.utils.serilizers import *
@@ -52,6 +54,7 @@ def get_book_info(book_id, book_url):
             detail=data.get("detail"),
             status=data.get("status")
         )
+        print("添加新小说:", data.get("name"))
 
     book = Book.objects.filter(Q(id=book_id) | Q(book_url=book_url)).first()
     res["data"] = BookSerialize(book).data
@@ -220,5 +223,20 @@ def delete_book_history(user_id, book_id):
     history.update(is_read=0)
 
     res["data"] = get_all_book_history(user_id)["data"]
+
+    return res
+
+
+@transaction.atomic
+def book_search(keywords, page):
+    """根据关键字模糊查找漫画"""
+    res = {
+        "code": SUCCESS_CODE,
+        "msg": "获取搜索结果成功",
+    }
+    bookspider.download_search(keywords)
+    data = Book.objects.filter(Q(name__contains=keywords) | Q(author__name__contains=keywords)).all()
+
+    res["data"] = BookSerialize(data, many=True).data
 
     return res

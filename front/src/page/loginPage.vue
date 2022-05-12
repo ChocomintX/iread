@@ -53,10 +53,8 @@ export default {
         "password": values.password,
       }).then(res => {
         if(res.code===code.SUCCESS_CODE){
-          this.$user = res.data
-          console.log(this.$user)
           localStorage.setItem("user", JSON.stringify(res.data))
-          this.$router.push("/home")
+          location.reload()
         }else {
           Toast.fail(res.msg)
         }
@@ -64,7 +62,8 @@ export default {
     }
   },
   created() {
-    // alert("测试")
+    if(this.$user)
+      this.$router.push("/home")
   }
 }
 </script>

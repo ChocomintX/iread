@@ -2,10 +2,8 @@ import axios from 'axios'
 
 // 创建一个 axios 实例
 const service = axios.create({
-    // baseURL: 'http://10.91.11.58:8000/', // 所有的请求地址前缀部分
-    // baseURL: 'http://172.20.10.2:8000/',
-    // baseURL: 'http://42.193.223.241:6001/',
-    baseURL: 'http://localhost:8000/',
+    // baseURL: 'https://chocomint.cn/api/', // 所有的请求地址前缀部分
+    baseURL: 'http://localhost:8000/api/',
     timeout: 60000, // 请求超时时间毫秒
     withCredentials: true, // 异步请求携带cookie
     headers: {

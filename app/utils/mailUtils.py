@@ -1,8 +1,9 @@
+import hashlib
 import smtplib
 from email.mime.text import MIMEText
 
 
-def sendEmail(title, content):
+def sendEmail(email, title, content):
     # 设置服务器所需信息
     # 163邮箱服务器地址
     mail_host = 'smtp.163.com'
@@ -14,7 +15,7 @@ def sendEmail(title, content):
     # 邮件发送方邮箱地址
     sender = 'iread_active@163.com'
     # 邮件接受方邮箱地址，注意需要[]包裹，这意味着你可以写多个邮件地址群发
-    receivers = ['2509628142@qq.com','401162659@qq.com']
+    receivers = [email]
 
     # 设置email信息
     # 邮件内容设置

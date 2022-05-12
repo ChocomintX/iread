@@ -92,3 +92,10 @@ export function apiDeleteBookHistory(param) {
     })
 }
 
+export function apiGetBookSearch(param) {
+    return httpRequest({
+        url: path + 'getBookSearch/',
+        method: 'POST',
+        data: getFormData(param)
+    })
+}

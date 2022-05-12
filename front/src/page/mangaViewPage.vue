@@ -217,7 +217,8 @@ export default {
     },
     getTime() {
       const date = new Date()
-      this.time = date.getMonth() + "-" + date.getDay() + " " + date.getHours() + ":" + date.getMinutes()
+      this.time = date.getMonth() + "-" + date.getDay() + " " + date.getHours() + ":" +
+          (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes())
     },
     async init() {
       this.loadingPage = true

@@ -344,6 +344,9 @@ export default {
     showChapterList() {
       if (!this.showChapterList)
         this.chapterListOrder = false
+    },
+    settings(){
+      console.log(this.settings)
     }
   },
   created() {

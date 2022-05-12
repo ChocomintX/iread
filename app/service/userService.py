@@ -1,13 +1,10 @@
-import json
-
-import requests
 from django.http import HttpResponse, response, JsonResponse
-from app.models import User
-from django.db.models import Q
 from django.db import transaction
 import app.utils.kkmh as kkmh
 from app.utils.return_code import SUCCESS_CODE, ERROR_CODE
 from app.utils.serilizers import *
+from app.utils.mailUtils import sendEmail
+import hashlib
 
 
 def test(request):
@@ -66,10 +63,41 @@ def register(data):
         res["code"] = ERROR_CODE
         res["msg"] = "用户名或邮箱已被注册"
     else:
-        new_user = User(username=username, password=password, nickname=nickname, email=email,active_status=1)
+        new_user = User(username=username, password=password, nickname=nickname, email=email, active_status=0)
         new_user.save()
-        res["data"]=UserSerialize(new_user).data
+        md5_object = hashlib.md5()
+        md5_object.update(str(UserSerialize(new_user).data).encode("utf-8"))
+        md5_result = md5_object.hexdigest()
+        sendEmail(email, "认证您的帐户",
+                  "点击以下链接以激活您的帐号:https://www.chocomint.cn/api/user/active?id={0}&token={1}"
+                  .format(new_user.id, md5_result))
+        res["data"] = UserSerialize(new_user).data
     return res
+
+
+@transaction.atomic
+def active(data):
+    """激活用户"""
+    user_id = data.get("id")
+    token = data.get("token")
+    user = User.objects.filter(id=user_id).first()
+
+    md5_object = hashlib.md5()
+    md5_object.update(str(UserSerialize(user).data).encode("utf-8"))
+    md5_result = md5_object.hexdigest()
+
+    if md5_result != token:
+        return """
+            信息不符，激活失败！
+            """
+
+    User.objects.filter(id=user_id).update(active_status=1)
+    return """
+    <script>
+        alert('激活成功！为您跳转主站')
+        window.location.href="https://chocomint.cn/iread"
+    </script>
+    """
 
 
 @transaction.atomic

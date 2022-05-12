@@ -172,7 +172,7 @@ def get_manga_search(request):
     try:
         data = request.POST
         keywords = data.get("keywords")
-        page = data.get("keywords")
+        page = data.get("page")
         return JsonResponse(mangaService.manga_search(keywords, page))
     except Exception as e:
         return JsonResponse({

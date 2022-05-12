@@ -159,7 +159,7 @@ export default {
         this.mangaChapterList = res.data
       })
 
-      const user_id=this.$user.id
+      const user_id = this.$user.id
       await apiGetLastReadChapter({
         user_id: user_id,
         manga_id: this.mangaInfo.id
@@ -199,7 +199,16 @@ export default {
           title: "提示",
           message: "上次看到" + this.mangaHistory.last_read_chapter + ",是否继续阅读？"
         }).then(() => {
-
+          const list=JSON.parse(JSON.stringify(this.mangaChapterList))
+          for (let i = 0; i < list.length; i++) {
+            for (let j = 0; j < list[i].chapter_list.length; j++) {
+              console.log(i,j)
+              if (list[i].chapter_list[j].url === this.mangaHistory.last_read_url) {
+                this.openChapter(i, j)
+                break
+              }
+            }
+          }
         }).catch(() => {
           // on cancel
         });
@@ -247,11 +256,11 @@ export default {
     this.init()
   },
   activated() {
-    console.log(parseInt(this.$route.params.id) , this.mangaInfo.id)
+    console.log(parseInt(this.$route.params.id), this.mangaInfo.id)
     if (parseInt(this.$route.params.id) !== this.mangaInfo.id) {
       this.init()
     } else {
-      window.scrollTo(0,0)
+      window.scrollTo(0, 0)
       console.log("缓存页面:漫画信息页")
     }
   }

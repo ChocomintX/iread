@@ -50,16 +50,19 @@
           @cancel="showPicker = false"
       />
     </van-popup>
-    <manga-search-page v-if="isSearch" :search-count="searchCount" :keywords="searchText"></manga-search-page>
+    <manga-search-page v-if="isSearch&&pickType===0" :search-count="searchCount" :keywords="searchText"></manga-search-page>
+    <book-search-page v-if="isSearch&&pickType===1"  :search-count="searchCount" :keywords="searchText"></book-search-page>
+<!--    <book-search-page v-if="isSearch&&pickType===1" :search-count="searchCount" :keywords="searchText"></book-search-page>-->
   </div>
 </template>
 
 <script>
 import MangaSearchPage from "@/page/mangaSearchPage";
+import BookSearchPage from "@/page/bookSearchPage";
 
 export default {
   name: "searchPage",
-  components: {MangaSearchPage},
+  components: {BookSearchPage, MangaSearchPage},
   data() {
     return {
       searchText: "",

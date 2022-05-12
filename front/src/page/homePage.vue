@@ -90,12 +90,11 @@ export default {
   created() {
     this.init()
   },
-  activated() {
-    console.log("加载缓存界面：主页")
-  },
-  deactivated() {
-  }
-
+  // activated() {
+  //   console.log("加载缓存界面：主页")
+  // },
+  // deactivated() {
+  // }
 }
 </script>
 

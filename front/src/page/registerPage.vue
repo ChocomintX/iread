@@ -23,7 +23,7 @@
             name="rePassword"
             label="确认密码"
             placeholder="再次输入密码"
-            :rules="[{ required: true, message: '请确认密码' }]"
+            :rules="[{ validator, message: '两次输入密码不一致' }]"
         />
         <van-field
             v-model="registerForm.nickName"
@@ -53,7 +53,7 @@
 
 <script>
 import {apiUserRegister} from "@/apis/userApi";
-import {Toast} from "vant";
+import {Dialog, Toast} from "vant";
 
 export default {
   name: "registerPage",
@@ -70,14 +70,20 @@ export default {
     }
   },
   methods: {
-    onSubmit(values) {
-      apiUserRegister(values).then(res => {
-        this.user = res.data
-        console.log(res.data)
+    validator(){
+      return this.registerForm.password === this.registerForm.rePassword;
+    },
+    async onSubmit(values) {
+      Toast.loading("请求中...")
+      await apiUserRegister(values).then(res => {
+        Toast.clear()
         if(res.code===0){
-          this.$user = res.data
-          localStorage.setItem("user", JSON.stringify(res.data))
-          this.$router.push("/home")
+          Dialog.alert({
+            title: '提示',
+            message: '注册成功！请前往邮箱激活账号',
+          }).then(() => {
+            this.$router.push("/login")
+          });
         }else{
           Toast.fail(res.msg)
         }

@@ -43,7 +43,7 @@ export default {
         message: "确定要退出登录吗？"
       }).then(() => {
         localStorage.clear()
-        this.$router.push("/login/")
+        location.reload()
       }).catch(() => {
         // on cancel
       });

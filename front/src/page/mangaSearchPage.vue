@@ -37,7 +37,7 @@ export default {
   methods: {
     async init() {
       Toast.loading({
-        message: "获取浏览历史中...",
+        message: "搜索中...",
         duration: 0
       })
       this.loadingPage = true

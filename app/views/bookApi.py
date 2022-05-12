@@ -170,3 +170,17 @@ def delete_book_history(request):
             "msg": "请求失败！",
             "error_msg": str(e)
         })
+
+
+def get_book_search(request):
+    try:
+        data = request.POST
+        keywords = data.get("keywords")
+        page = data.get("page")
+        return JsonResponse(bookService.book_search(keywords, page))
+    except Exception as e:
+        return JsonResponse({
+            "code": ERROR_CODE,
+            "msg": "请求失败！",
+            "error_msg": str(e)
+        })

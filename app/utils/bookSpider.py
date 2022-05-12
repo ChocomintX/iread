@@ -1,9 +1,9 @@
 from threading import Thread
 from time import sleep
-
+from urllib.parse import unquote, quote
 import requests
 from bs4 import BeautifulSoup
-import re
+import app.service.bookService as bs
 
 # 数据源网址，此处选择笔趣阁
 base_url = "https://www.qbiqu.com"
@@ -135,14 +135,8 @@ def get_chapter_content(chapter_url):
     """
     爬取小说章节内容
 
-    :param book_url: 小说链接
-    :return:
-    [
-        {
-            "chapter_name": 章节名,
-            "chapter_url": 章节链接
-        }
-    ]
+    :param chapter_url: 章节链接
+    :return: content 章节内容
     """
     r = requests.get(chapter_url)
     r.encoding = "GBK"
@@ -155,6 +149,25 @@ def get_chapter_content(chapter_url):
     return str(content)
 
 
+def search(keywords, page):
+    """
+    模糊搜索小说
+
+    :param keywords: 关键字
+    :param page: 页数
+    :return:
+    """
+    r = requests.get("https://www.qbiqu.com/modules/article/search.php?searchkey={0}&page={1}".format(
+        quote(keywords, encoding="GBK"), page))
+    r.encoding = "GBK"
+    print(keywords, page)
+    soup = BeautifulSoup(r.text, "html.parser")
+    print(soup)
+    books = soup.find_all(id="nr")
+    for book in books:
+        bs.get_book_info(None, book.find("a").get("href"))
+
+
 def async_call(fn):
     def wrapper(*args, **kwargs):
         Thread(target=fn, args=args, kwargs=kwargs).start()
@@ -163,9 +176,33 @@ def async_call(fn):
 
 
 @async_call
+def download_search(keywords):
+    """
+    缓存搜索到的小说
+
+    :param keywords:
+    :return:
+    """
+    page = 1
+    flag = True
+    while flag:
+        r = requests.get("https://www.qbiqu.com/modules/article/search.php?searchkey={0}&page={1}".format(
+            quote(keywords, encoding="GBK"), page))
+        r.encoding = "GBK"
+        soup = BeautifulSoup(r.text, "html.parser")
+
+        flag = soup.find(attrs={"class": "next"}) is not None
+        page += 1
+        print(flag,page)
+        books = soup.find_all(id="nr")
+        for book in books:
+            bs.get_book_info(None, book.find("a").get("href"))
+
+
+@async_call
 def download():
     """下载信息到数据库"""
-    import app.service.bookService as bs
+
     # 获取原始文本
     r = requests.get("https://www.qbiqu.com/xiaoshuodaquan/", headers={
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36"
@@ -176,13 +213,17 @@ def download():
     book_list = soup.find(attrs={"id": "main"}).find_all("a")
     print(book_list)
     index = 1
+    sleep(6)
     for book in book_list:
         print("当前缓存小说{0},链接:{1}  进度:{2}/{3}".format(book.text, book.get("href"), index, len(book_list)))
         index += 1
-        bs.get_book_info(None, book_url=book.get("href"))
+        try:
+            bs.get_book_info(None, book_url=book.get("href"))
+        except:
+            print("错误:", book)
+            continue
     # print(error_list,len(error_list))
 
 
 if __name__ == '__main__':
-    print(1)
-    print(get_chapter_content("https://www.qbiqu.com/0_305/2954768.html"))
+    search("大主宰", 1)

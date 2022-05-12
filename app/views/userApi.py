@@ -53,6 +53,17 @@ def register(request):
         })
 
 
+def active(request):
+    try:
+        return HttpResponse(userService.active(request.GET))
+    except Exception as e:
+        return JsonResponse({
+            "code": ERROR_CODE,
+            "msg": "请求失败！",
+            "error_msg": str(e)
+        })
+
+
 def update(request):
     try:
         return JsonResponse(userService.update(request.POST))
