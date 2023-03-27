@@ -1,7 +1,7 @@
 import json
 
 from django.http import HttpResponse, response, JsonResponse
-import app.service.mangaService as mangaService
+import app.service.mangaService_bqg as mangaService
 from app.utils.return_code import SUCCESS_CODE, ERROR_CODE
 
 

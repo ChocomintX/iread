@@ -22,7 +22,7 @@ from app.utils import bookSpider
 urlpatterns = [
     path('api/', include([
         path('admin/', admin.site.urls),
-        path('index/', userApi.test),
+        path('download/', userApi.test),
 
         # 用户接口
         path('user/', include([

@@ -11,7 +11,9 @@ def get_chapter_images(chapter_url):
     """根据章节获取图片列表"""
 
     # 获取原始文本
-    r = requests.get(chapter_url)
+    r = requests.get(chapter_url, headers={
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
+    })
     r.encoding = "UTF-8"
     # soup = BeautifulSoup(r.text, "html.parser")
     # script = soup.find("script").text
@@ -33,7 +35,9 @@ def get_chapter_lists(manga_url):
     """获取漫画所有章节"""
 
     # 获取原始文本
-    r = requests.get(manga_url)
+    r = requests.get(manga_url, headers={
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
+    })
     r.encoding = "UTF-8"
     # 提取章节容器元素
     soup = BeautifulSoup(r.text, "html.parser")
@@ -100,7 +104,8 @@ def get_manga_info(manga_url):
 
     # 简介
     d = info_group.findAll("p", attrs={"class": "comic_deCon_d"})
-    manga_info["detail"] = d[len(d) - 1].text.replace("[-折叠]", "").replace("[+展开] ", "").replace("\n<<隐藏", "").strip()
+    manga_info["detail"] = d[len(d) - 1].text.replace("[-折叠]", "").replace("[+展开] ", "").replace("\n<<隐藏",
+                                                                                                     "").strip()
 
     return manga_info
 
@@ -165,10 +170,11 @@ def download():
 
 
 if __name__ == '__main__':
-    # imgs = get_chapter_images("https://www.ykmh.com/manhua/yiquanchaoren/132026.html")
+    imgs = get_chapter_images("http://www.ykmh.com/manhua/yiquanchaoren/132026.html")
+    print(imgs)
     # print(imgs, "\n", len(imgs))
     # chapters = get_chapter_lists("https://www.ykmh.com/manhua/jinjidejuren/")
     # print(chapters)
     # info = get_manga_info("http://www.ykmh.com/manhua/yiquanchaoren/")
     # print(info)
-    download()
+    # download()

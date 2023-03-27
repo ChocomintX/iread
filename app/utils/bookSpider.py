@@ -3,10 +3,15 @@ from time import sleep
 from urllib.parse import unquote, quote
 import requests
 from bs4 import BeautifulSoup
+
 import app.service.bookService as bs
 
 # 数据源网址，此处选择笔趣阁
-base_url = "https://www.qbiqu.com"
+base_url = "http://www.ibiqu.org/"
+desktop_headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) " +
+                  "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36"
+}
 
 
 def get_home_books():
@@ -34,7 +39,7 @@ def get_home_books():
     """
     result = []
 
-    r = requests.get(base_url)
+    r = requests.get(base_url, headers=desktop_headers)
     r.encoding = "GBK"
 
     soup = BeautifulSoup(r.text, "html.parser")
@@ -79,7 +84,7 @@ def get_book_info(book_url):
         "status": 连载状态
     }
     """
-    r = requests.get(book_url)
+    r = requests.get(book_url, headers=desktop_headers)
     r.encoding = "GBK"
 
     soup = BeautifulSoup(r.text, "html.parser")
@@ -89,9 +94,11 @@ def get_book_info(book_url):
         "name": info.find("h1").text,
         "author": info.find_all("p")[0].text.split("：")[1],
         "update_time": info.find_all("p")[2].text.split("：")[1],
-        "new_chapter_name": info.find_all("a")[3].get("title"),
-        "new_chapter_url": book_url + info.find_all("a")[3].get("href"),
-        "image_url": base_url + img.find().get("src"),
+        # "new_chapter_name": info.find_all("p")[3].find("a").text,
+        # "new_chapter_url": book_url + info.find_all("p")[3].find("a").get("href"),
+        "new_chapter_name": "暂无信息",
+        "new_chapter_url": "#",
+        "image_url": img.find().get("src"),
         "detail": soup.find(id="intro").find("p").text,
         "status": "连载中" if img.find_all()[1].get("class") == "a" else "已完结"
     }
@@ -111,7 +118,7 @@ def get_book_chapter(book_url):
         }
     ]
     """
-    r = requests.get(book_url)
+    r = requests.get(book_url, headers=desktop_headers)
     r.encoding = "GBK"
 
     soup = BeautifulSoup(r.text, "html.parser")
@@ -138,7 +145,8 @@ def get_chapter_content(chapter_url):
     :param chapter_url: 章节链接
     :return: content 章节内容
     """
-    r = requests.get(chapter_url)
+    r = requests.get(chapter_url.replace("http://www.ibiqu.org/http://www.ibiqu.org/", "http://www.ibiqu.org/"),
+                     headers=desktop_headers)
     r.encoding = "GBK"
 
     soup = BeautifulSoup(r.text, "html.parser")
@@ -157,8 +165,8 @@ def search(keywords, page):
     :param page: 页数
     :return:
     """
-    r = requests.get("https://www.qbiqu.com/modules/article/search.php?searchkey={0}&page={1}".format(
-        quote(keywords, encoding="GBK"), page))
+    r = requests.get(base_url + "modules/article/search.php?searchkey={0}&page={1}".format(
+        quote(keywords, encoding="GBK"), page), headers=desktop_headers)
     r.encoding = "GBK"
     print(keywords, page)
     soup = BeautifulSoup(r.text, "html.parser")
@@ -183,28 +191,23 @@ def download_search(keywords):
     :param keywords:
     :return:
     """
-    page = 1
-    flag = True
-    while flag:
-        r = requests.get("https://www.qbiqu.com/modules/article/search.php?searchkey={0}&page={1}".format(
-            quote(keywords, encoding="GBK"), page))
-        r.encoding = "GBK"
-        soup = BeautifulSoup(r.text, "html.parser")
+    r = requests.get(base_url + "/modules/article/search.php?searchkey={0}".format(
+        keywords), headers=desktop_headers)
+    r.encoding = "GBK"
+    soup = BeautifulSoup(r.text, "html.parser")
 
-        flag = soup.find(attrs={"class": "next"}) is not None
-        page += 1
-        print(flag,page)
-        books = soup.find_all(id="nr")
-        for book in books:
-            bs.get_book_info(None, book.find("a").get("href"))
+    books = soup.find(attrs={"id": "hotcontent"}).find_all("tr")
+    books.pop(0)
+    for book in books:
+        bs.get_book_info(None, book.find("a").get("href"))
 
 
 @async_call
 def download():
-    """下载信息到数据库"""
+    """下载信息到数据库(于2023.3.2失效)"""
 
     # 获取原始文本
-    r = requests.get("https://www.qbiqu.com/xiaoshuodaquan/", headers={
+    r = requests.get(base_url + "xiaoshuodaquan/", headers={
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36"
     })
     r.encoding = "GBK"
@@ -217,13 +220,32 @@ def download():
     for book in book_list:
         print("当前缓存小说{0},链接:{1}  进度:{2}/{3}".format(book.text, book.get("href"), index, len(book_list)))
         index += 1
+        bs.get_book_info(None, book_url=base_url + book.get("href"))
+        # try:
+        #     bs.get_book_info(None, book_url=book.get("href"))
+        # except:
+        #     print("错误:", book)
+        #     continue
+    # print(error_list,len(error_list))
+
+
+@async_call
+def download_2():
+    """下载信息到数据库"""
+
+    for i in range(100000):
+        print(i + 1)
+
         try:
-            bs.get_book_info(None, book_url=book.get("href"))
+            data = bs.get_book_info(None, book_url=base_url + 'book/{0}/'.format(i + 1))
         except:
-            print("错误:", book)
+            print("错误:", str(i))
             continue
     # print(error_list,len(error_list))
 
 
 if __name__ == '__main__':
-    search("大主宰", 1)
+    # search("大主宰", 1)
+    # print(get_book_info("http://www.ibiqu.org/book/52542/"))
+    print(get_home_books())
+    # download()

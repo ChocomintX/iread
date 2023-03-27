@@ -98,7 +98,7 @@ class Manga(models.Model):
     title = models.CharField(verbose_name="漫画名", max_length=200)
     image_url = models.CharField(verbose_name="最后阅读章节的链接", max_length=500)
     manga_url = models.CharField(verbose_name="漫画主页链接", max_length=500)
-    status = models.CharField(verbose_name="状态", max_length=20)
+    status = models.CharField(verbose_name="状态", max_length=200)
     detail = models.CharField(verbose_name="简介", max_length=1000)
 
     author = models.ForeignKey(verbose_name="作者id", to=MangaAuthor, to_field="id", on_delete=models.CASCADE)

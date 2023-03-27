@@ -4,6 +4,7 @@ from app.utils.return_code import SUCCESS_CODE, ERROR_CODE
 from django_redis import get_redis_connection
 from django.core.cache import cache
 import app.utils.kkmh as kkmh
+import app.utils.bqgmh as bqgmh
 import app.utils.bookSpider as bookSpider
 
 
@@ -15,7 +16,8 @@ def test(request):
     # name = str(conn.get('age'), encoding='utf-8')
 
     # kkmh.download()
-    bookSpider.download()
+    # bookSpider.download_2()
+    bqgmh.download()
 
     return HttpResponse("ok")
 

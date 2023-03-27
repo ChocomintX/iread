@@ -9,6 +9,7 @@ from app.utils.return_code import SUCCESS_CODE, ERROR_CODE
 
 def get_home_book(request):
     try:
+        print(bookService.get_home_books())
         return JsonResponse(bookService.get_home_books())
     except Exception as e:
         return JsonResponse({
