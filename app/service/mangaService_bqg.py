@@ -51,10 +51,9 @@ def get_home_manga():
             "data": data
         })
 
-    cache.set("home_manga", home_manga)
+    # cache.set("home_manga", home_manga)
 
     res["data"] = home_manga
-
     return res
 
 

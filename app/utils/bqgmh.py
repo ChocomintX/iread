@@ -34,9 +34,9 @@ def get_chapter_images(chapter_url):
 
     # 获取图片元素列表
     chapter_images = []
-    images = soup.find(id="cp_img").find_all("img")
+    images = soup.find(class_="comic-list").find_all("img")
     for image in images:
-        chapter_images.append(image.get("data-original"))
+        chapter_images.append(image.get("src"))
 
     # 去除尾部广告二维码图片
     # chapter_images.pop()
@@ -66,7 +66,7 @@ def get_chapter_lists(manga_url):
     # 提取章节容器元素
     soup = BeautifulSoup(r.text, "html.parser")
     # print(soup)
-    chapter_html = soup.find(class_="detail-list-select").find_all(class_="chapteritem")
+    chapter_html = soup.find(class_="catalog-list").find_all("a")
 
     # 适应接口形状
     # 循环获取所有章节列表，存入chapter_lists并返回
@@ -74,7 +74,7 @@ def get_chapter_lists(manga_url):
     chapter_list = []
     for chapter in chapter_html:
         chapter_list.append({
-            "name": chapter["title"],
+            "name": chapter.text,
             "url": chapter["href"].replace("https://www.biqug.org", "")
         })
     chapter_list.reverse()
@@ -193,14 +193,14 @@ def search(keywords, page):
     """
 
     # search_url=BASE_URL + "/search/{}/{}".format(keywords, page)
-    search_url = BASE_URL + "/search?key={}".format(keywords)
+    search_url = BASE_URL + "/index.php/search?key={}".format(keywords)
 
     # 获取原始文本
     r = requests.get(search_url, headers=mobile_headers)
     # r.encoding = "UTF-8"
     # 提取搜索结果容器元素
     soup = BeautifulSoup(r.text, "html.parser")
-    search_list = soup.find(class_="book-list").find_all("li")
+    search_list = soup.find_all(class_="common-comic-item")
 
     search_result = []
     # 若为空则直接返回
@@ -210,11 +210,11 @@ def search(keywords, page):
     # 遍历搜索结果，存入search_result后返回
     for item in search_list:
         search_result.append({
-            "title": item.find(class_="book-list-info-title").text,
-            "manga_url": item.find("a").get("href").replace("https://www.biqug.org", ""),
-            "image_url": item.find("img").get("data-original"),
-            "author": item.find(class_="book-list-info-bottom-item").text.split("：")[1],
-            "last_chapter": item.find(class_="book-list-info-bottom-right-font").text,
+            "title": item.find(class_="comic__title").text,
+            "manga_url": item.find("a").get("href"),
+            "image_url": item.find("img").get("src"),
+            "author": "未知",
+            "last_chapter": "未知",
         })
 
     return search_result
@@ -261,7 +261,9 @@ if __name__ == '__main__':
 
     # chapter_lists = get_chapter_lists("/index.php/comic/moshiweiwang")
     # print(chapter_lists)
-    # print(get_chapter_images("/index.php/chapter/1507232"))
+    # print(get_chapter_images("/index.php/chapter-284292.html"))
+
+    # print(get_manga_info("/index.php/comic/moshiweiwang"))
 
     # print(chapter_lists[0])
     # chapter = chapter_lists[0]["chapter_list"][0]
