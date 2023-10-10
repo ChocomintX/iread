@@ -200,7 +200,7 @@ def search(keywords, page):
     # r.encoding = "UTF-8"
     # 提取搜索结果容器元素
     soup = BeautifulSoup(r.text, "html.parser")
-    search_list = soup.find_all(class_="common-comic-item")
+    search_list = soup.select(".comic-list-item")
 
     search_result = []
     # 若为空则直接返回
@@ -210,7 +210,7 @@ def search(keywords, page):
     # 遍历搜索结果，存入search_result后返回
     for item in search_list:
         search_result.append({
-            "title": item.find(class_="comic__title").text,
+            "title": item.find(class_="comic-name").text,
             "manga_url": item.find("a").get("href"),
             "image_url": item.find("img").get("src"),
             "author": "未知",
