@@ -211,7 +211,7 @@ def search(keywords, page):
     for item in search_list:
         search_result.append({
             "title": item.find(class_="comic-name").text,
-            "manga_url": item.find("a").get("href"),
+            "manga_url": "/index.php/{}".format(item.find("a").get("href")),
             "image_url": item.find("img").get("src"),
             "author": "未知",
             "last_chapter": "未知",
